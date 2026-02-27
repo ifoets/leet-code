@@ -1,5 +1,4 @@
 package com.classic.analysis.core.ds.heap;
-
 import org.junit.Before;
 import org.junit.Test;
 

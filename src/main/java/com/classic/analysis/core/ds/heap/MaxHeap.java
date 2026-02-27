@@ -66,7 +66,7 @@ public class MaxHeap {
     {
         return 2*i+2;
     }
-    boolean isEmpty()
+    public boolean isEmpty()
     {
         return size==0;
     }

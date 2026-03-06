@@ -7,6 +7,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IGoldmanSachTest {
 
@@ -131,8 +133,8 @@ public class IGoldmanSachTest {
      *  Write an algorithm to find the maximum number of books you can read for a given amount of money m.**/
     @Test
     public void maxBooksTest(){
-        Assert.assertEquals(3,igs.maxBooks(10,5,2));
-        Assert.assertEquals(9,igs.maxBooks(5,1,2));
+        Assert.assertEquals(3,igs.maxBooksReads(10,5,2));
+        Assert.assertEquals(9,igs.maxBooksReads(5,1,2));
     }
 
     /**Minimum Steps to Make All Elements 1
@@ -187,4 +189,107 @@ public class IGoldmanSachTest {
         int[] a ={4,3,-1,7,0,3,-3,2};
         igs.sumOfMinAndMax(a,4);
     }
+
+    /**Frequency Map (Last Removed Element),
+     * Rule: Reduce each key by 1 per round; remove when 0; answer = last removed key.
+     * Input {c=1, b=5, d=2} → A: b*/
+    @Test
+    public void lastRemovedElemTest()
+    {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('c', 1);
+        map.put('b', 5);
+        map.put('d', 2);
+
+        Assert.assertEquals('b',igs.lastRemovedElem(map));
+    }
+
+    @Test
+    public void lastRemovedElemXTest()
+    {
+        Map<Character, Integer> map = new HashMap<>();
+        map.put('c', 1);
+        map.put('b', 5);
+        map.put('d', 2);
+
+        Assert.assertEquals('b',igs.lastRemovedElemX(map));
+    }
+
+    /**41. First Missing Positive**/
+    @Test
+    public void firstMissingPositiveTest()
+    {
+        Assert.assertEquals(3,igs.firstMissingPositive(new int[]{0,2,2,1,1}));
+        Assert.assertEquals(2,igs.firstMissingPositive(new int[]{3,4,-1,1}));
+        Assert.assertEquals(1,igs.firstMissingPositive(new int[]{7,8,9,11,12}));
+    }
+    @Test
+    public void firstMissingPositiveXTest()
+    {
+        Assert.assertEquals(3,igs.firstMissingPositiveX(new int[]{0,2,2,1,1}));
+        Assert.assertEquals(2,igs.firstMissingPositiveX(new int[]{3,4,-1,1}));
+        Assert.assertEquals(1,igs.firstMissingPositiveX(new int[]{7,8,9,11,12}));
+    }
+
+    /**Reverse string without changing position of special char**/
+    @Test
+    public void reverseStrWithoutChangePosOfSpecialCharTest()
+    {
+        Assert.assertEquals("fe#dc,b@a",igs.reverseStrWithoutChangePosOfSpecialChar("ab#cd,e@f"));
+    }
+
+    /**First Non-Repeating Character*/
+    @Test
+    public void fistNonRepeatingCharTest()
+    {
+        Assert.assertEquals('a',igs.fistNonRepeatingChar("apple"));
+        Assert.assertEquals('e',igs.fistNonRepeatingChar("racecars"));
+        Assert.assertEquals('c',igs.fistNonRepeatingChar("ababbc"));
+    }
+
+    /** input can be ANY ASCII / Unicode*/
+    @Test
+    public void firstNonRepeatingCharStreamTest()
+    {
+        Assert.assertEquals('a',igs.firstNonRepeatingCharStream("a@b@c#b"));
+        Assert.assertEquals('&',igs.firstNonRepeatingCharStream("$$%%^&*()^"));
+        Assert.assertEquals('a',igs.firstNonRepeatingCharStream("ab-cd-ef"));
+
+        Assert.assertEquals('b',igs.firstNonRepeatingCharStream("a_b_c_a"));
+        Assert.assertEquals('A',igs.firstNonRepeatingCharStream("A!a!B"));
+    }
+
+    /**Max Average score*/
+    @Test
+    public void maxAverageScoreTest()
+    {
+
+        String[][] students = {
+                { "Bobby", "87" },
+                { "Charles", "100" },
+                { "Eric", "64" },
+                { "Charles", "22" }
+        };
+        System.out.println(igs.maxAverageScore(students));
+    }
+
+    /** Print even and odd numbers in increasing order using two threads in Java**/
+    @Test
+    public void printEvenOddTwoThreadTest()
+    {
+      igs.printEvenOddTwoThread();
+    }
+
+    @Test
+    public void kthSmallestNoTest(){
+        int[]a = {4,3,-5,6,-8,-20};
+        Assert.assertEquals(-8,igs.kthSmallestNo(a,2));
+    }
+    @Test
+    public void kthlargestNoTest()
+    {
+        int[]a = {4,3,-5,6,-8,-20};
+        Assert.assertEquals(4,igs.kthlargestNo(a,2));
+    }
+
 }

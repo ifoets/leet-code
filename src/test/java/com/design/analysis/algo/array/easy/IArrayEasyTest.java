@@ -57,7 +57,7 @@ public class IArrayEasyTest {
     /**26. Remove Duplicates from Sorted Array*/
     @Test
     public void removeDuplicatesTest(){
-        int[] nums ={1,1,2};
+        int[] nums ={1,1,1,2};
         Assert.assertEquals(2, iae.removeDuplicates(nums));
     }
 

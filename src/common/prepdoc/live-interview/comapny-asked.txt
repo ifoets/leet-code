@@ -1,3 +1,11 @@
+System design one of the beast site
+==================================
+https://bugfree.ai/practice/system-design
+
+low level design
+==================================
+https://github.com/ashishps1/awesome-low-level-design/tree/main/problems
+
 iauro
 ==========================
 how call microservice http and https

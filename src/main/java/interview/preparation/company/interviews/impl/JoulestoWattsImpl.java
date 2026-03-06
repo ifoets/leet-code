@@ -106,4 +106,44 @@ public class JoulestoWattsImpl implements IJoulestoWatts {
         }
         return new String(charsNew);
     }
+
+    /*public String replaceQuestionMarks(String s) {
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+
+        for (int i = 0; i < n; i++) {
+
+            if (arr[i] == '?') {
+
+                for (char candidate : new char[]{'a', 'b'}) {
+
+                    if (isValid(arr, i, candidate)) {
+                        arr[i] = candidate;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return new String(arr);
+    }
+
+    private boolean isValid(char[] arr, int index, char ch) {
+
+        // check left side
+        if (index >= 2 && arr[index - 1] == ch && arr[index - 2] == ch)
+            return false;
+
+        // check right side (important when next chars already exist)
+        if (index + 2 < arr.length && arr[index + 1] == ch && arr[index + 2] == ch)
+            return false;
+
+        // check sandwich case: a ? a where both sides same
+        if (index >= 1 && index + 1 < arr.length
+                && arr[index - 1] == ch
+                && arr[index + 1] == ch)
+            return false;
+
+        return true;
+    }*/
 }

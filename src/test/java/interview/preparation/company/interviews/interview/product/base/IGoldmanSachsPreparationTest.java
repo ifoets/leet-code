@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 
 public class IGoldmanSachsPreparationTest {
@@ -248,5 +250,151 @@ public class IGoldmanSachsPreparationTest {
     {
         int[] nums = {1,2,5,9};
         Assert.assertEquals(5,igsp.smallestDivisor(nums,6));
+    }
+
+    /**215. Kth Largest Element in an Array*/
+    @Test
+    public void kthLargestTest()
+    {
+        Assert.assertEquals(5,igsp.kthLargest(new int[]{1,2,5,7,3,8},3));
+    }
+
+    @Test
+    public void kthSmallestTest()
+    {
+        Assert.assertEquals(3,igsp.kthSmallest(new int[]{1,2,5,7,3,8},3));
+    }
+
+    @Test
+    public void KthLargestStreamTest()
+    {
+        igsp.KthLargestStream(3,new int[]{1,2,5,7,3,9});
+        igsp.add(8);
+        igsp.add(10);
+        Assert.assertEquals(9, igsp.add(11));
+    }
+
+    /**347. Top K Frequent Elements*/
+    @Test
+    public void topKFrequentTest()
+    {
+        int[] nums={1,1,1,2,2,3};
+        int k = 2;
+
+        Assert.assertArrayEquals(new int[]{1,2},igsp.topKFrequent(nums,k));
+    }
+
+    @Test
+    public void topKFrequentXTest()
+    {
+        int[] nums={1,1,1,2,2,3};
+        int k = 2;
+
+        Assert.assertArrayEquals(new int[]{1,2},igsp.topKFrequentX(nums,k));
+    }
+
+    /**1046. Last Stone Weight**/
+    @Test
+    public void lastStoneWeightTest()
+    {
+        Assert.assertEquals(1,igsp.lastStoneWeight(new int[]{2,7,4,1,8,1}));
+    }
+
+    /**Minimum Swaps to Move Max to End and Min to Start on adjecent swap**/
+    @Test
+    public void minSwapForMinAtFirstAndMaxLastTest()
+    {
+        Assert.assertEquals(5, igsp.minSwapForMinAtFirstAndMaxLast(new int[]{ 5, 2, 3, 1 }));
+    }
+
+    /**Find Missing Alphabets to Make a Pangram**/
+    @Test
+    public void findMissingAlphabetsTest()
+    {
+        Assert.assertEquals("defghijklmnopqrstuvwxyz",igsp.findMissingAlphabets("abc"));
+    }
+
+    /**1047. Remove All Adjacent Duplicates In String**/
+    @Test
+    public void removeDuplicatesTest()
+    {
+        Assert.assertEquals("ca", igsp.removeDuplicates("abbaca"));
+    }
+
+    /**replace element with just next greater element on right side**/
+    @Test
+    public void nextGreaterElemTest()
+    {
+        int[]a={4, 1, 3, 5, 6, 2, 7, 8};
+        int[] res = igsp.nextGreaterElem(a);
+        int[]o= {5, 3, 5, 6, 7, 7, 8, -1};
+
+        Assert.assertArrayEquals(o,res);
+    }
+    /**1299. Replace Elements with Greatest Element on Right Side**/
+    @Test
+    public void replaceElementsTest()
+    {
+        int[] arr = {17,18,5,4,6,1};
+        int[] expArr = {18,6,6,6,1,-1};
+
+        arr = igsp.replaceElements(arr);
+        Assert.assertArrayEquals(expArr,arr);
+    }
+
+    /**735. Asteroid Collision**/
+    @Test
+    public void asteroidCollisionTest()
+    {
+        int[]asteroids = {10,2,-5};
+        Assert.assertArrayEquals(new int[]{10},igsp.asteroidCollision(asteroids));
+    }
+
+    /**741. Cherry Pickup**/
+    @Test
+    public void cherryPickupTest()
+    {
+        int[][]grid = {
+                {0, 1, -1},
+                {1, 0, -1},
+                {1, 1, 1}
+        };
+
+        Assert.assertEquals(5,igsp.cherryPickup(grid));
+    }
+
+    /**62. Unique Paths*/
+    @Test
+    public void uniquePathsTest()
+    {
+        Assert.assertEquals(6,igsp.uniquePaths(3,3));
+    }
+
+    /**63. Unique Paths II**/
+    @Test
+    public void uniquePathsWithObstaclesTest()
+    {
+        int[][] grid =
+                {
+                        {0,0,0},
+                        {0,1,0},
+                        {0,0,0}
+                };
+
+        Assert.assertEquals(2,igsp.uniquePathsWithObstacles(grid));
+    }
+
+    /**621. Task Scheduler**/
+    @Test
+    public void leastIntervalTest()
+    {
+
+    }
+    /**find index of left sum==right sum**/
+    @Test
+    public void pivotSumIndexTest()
+    {
+        int[] nums ={1,7,3,6,5,6};
+        igsp.pivotSumIndex(nums);
     }
 }

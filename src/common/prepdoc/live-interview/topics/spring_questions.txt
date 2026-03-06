@@ -20,7 +20,7 @@ ________________________________________
     4.	What happens if BeanPostProcessor throws exception?
     5.	How does @PreDestroy work?
     6.	How does Spring destroy prototype beans?
-    7.	What is SmartInitializingSingleton?
+    7.	What is SmartInitializingSingleton?//call back interface after all singlton bean initlized, @post construct after a single bean call back
     8.	Can we change bean definition at runtime?
     9.	How InitializingBean differs from @PostConstruct?
     10.	When would you use DisposableBean?

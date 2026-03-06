@@ -1,5 +1,6 @@
 package interview.preparation.company.interviews.impl.product.base;
 
+import interview.preparation.company.interviews.question.INetcore;
 import interview.preparation.company.interviews.question.product.base.IGoldmanSachsPreparation;
 import org.checkerframework.checker.units.qual.Temperature;
 
@@ -735,4 +736,394 @@ public class GoldmanSachsPreparationImpl implements IGoldmanSachsPreparation {
         return true;
     }
 
+    /**215. Kth Largest Element in an Array*/
+    @Override
+    public int kthLargest(int[] nums,int k){
+        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+
+        for(int i:nums)
+        {
+            pq.offer(i);
+            if(pq.size()>k)
+                pq.poll();
+        }
+        return pq.isEmpty()?Integer.MAX_VALUE:pq.peek();
+    }
+    @Override
+    public int kthSmallest(int[] nums,int k){
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        for(int i:nums)
+        {
+            pq.offer(i);
+            if(pq.size()>k)
+                pq.poll();
+        }
+        return pq.isEmpty()?Integer.MIN_VALUE:pq.peek();
+    }
+
+    PriorityQueue<Integer> pq;
+    int k;
+    @Override
+    public int KthLargestStream(int k, int[] nums){
+        this.k=k;
+        pq = new PriorityQueue<>();
+        for(int i:nums)
+        {
+            pq.offer(i);
+            if(pq.size()>k)
+                pq.poll();
+        }
+        return pq.peek();
+    }
+    @Override
+    public int add(int val){
+        pq.add(val);
+        if(pq.size()>k)
+            pq.poll();
+        return pq.peek();
+    }
+
+    /**347. Top K Frequent Elements*/
+    @Override
+    public int[] topKFrequent(int[] nums, int k){
+        return
+                Arrays.stream(nums).boxed()
+                        .collect(
+                        Collectors.groupingBy(
+                                Function.identity(),
+                                Collectors.counting()
+                        )
+                )
+                        .entrySet()
+                        .stream()
+                        .sorted(
+                                Map.Entry.<Integer,Long>comparingByValue().reversed()
+                        )
+                        .limit(k)
+                        .mapToInt(Map.Entry::getKey)
+                        .toArray();
+    }
+
+    @Override
+    public int[] topKFrequentX(int[] nums, int k){
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            map.put(n, map.getOrDefault(n, 0) + 1);
+        }
+
+        // Min-heap by frequency
+        PriorityQueue<int[]> pq =
+                new PriorityQueue<>(Comparator.comparingInt(a -> a[1]));
+
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+            pq.offer(new int[]{e.getKey(), e.getValue()});
+            if (pq.size() > k) {
+                pq.poll();   // keep only top k frequent
+            }
+        }
+
+        int[] res = new int[k];
+        int i = 0;
+        while (!pq.isEmpty()) {
+            res[k-1-i++] = pq.poll()[0];
+        }
+        return res;
+    }
+
+    /**1046. Last Stone Weight**/
+    @Override
+    public int lastStoneWeight(int[] stones){
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+
+        for (int stone:stones)pq.offer(stone);
+        while (pq.size()>1)
+        {
+            int y = pq.poll();
+            int x = pq.poll();
+            if(y!=x)pq.offer(y-x);
+        }
+        return pq.isEmpty()?0:pq.peek();
+    }
+    /**Minimum Swaps to Move Max to End and Min to Start on adjecent swap**/
+    /**Each adjacent swap moves the element by exactly one position.
+     So to move:
+
+     min from minIndex → 0 → need minIndex swaps
+
+     max from maxIndex → (n-1) → need (n - 1 - maxIndex) swaps*/
+    @Override
+    public int minSwapForMinAtFirstAndMaxLast(int[] nums){
+        int minIdx=-1,maxIdx=-1;
+        int min=Integer.MAX_VALUE;
+        int max=Integer.MIN_VALUE;
+
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]<min)
+            {
+                min = nums[i];
+                minIdx=i;
+            }
+            if(nums[i]>max)
+            {
+                max = nums[i];
+                maxIdx = i;
+            }
+        }
+        int adjacentSwap = minIdx + (nums.length-1-maxIdx);
+        //min is towards end
+        if(minIdx>maxIdx)
+            adjacentSwap--; //since right is shifted one right due to left shifting
+        /*
+arr = [ 5, 2, 3, 1 ]
+index   0  1  2  3
+max = 5 at index 0
+min = 1 at index 3   (min is to the RIGHT of max)
+n = 4
+
+[5, 2, 3, 1]
+[5, 2, 1, 3]   // swap (1,3)
+[5, 1, 2, 3]   // swap (1,2)
+[1, 5, 2, 3]   // swap (1,5)
+
+
+Now the array is:
+
+[1, 5, 2, 3]
+^
+max (5)*/
+        return adjacentSwap;
+    }
+
+    /**Find Missing Alphabets to Make a Pangram**/
+    @Override
+    public String findMissingAlphabets(String str){
+        boolean[] present = new boolean[26];
+
+        for(char c:str.toCharArray())present[c-'a']=true;
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<26;i++)
+            if(!present[i])sb.append((char)(i+'a'));
+        return sb.toString();
+    }
+
+    /**1047. Remove All Adjacent Duplicates In String**/
+    @Override
+    public String removeDuplicates(String s)
+    {
+        Stack<Character> stack = new Stack<>();
+        for(char c:s.toCharArray())
+        {
+            boolean pop=false;
+            while (!stack.isEmpty()&&stack.peek()==c) {
+                stack.pop();
+                pop=true;
+            }
+            if(!pop) {
+                stack.push(c);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty())
+            sb.append(stack.pop());
+        return sb.reverse().toString();
+    }
+    @Override
+    public int[] nextGreaterElem(int[] a) {
+        int n = a.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            while (!stack.isEmpty() && stack.peek() <= a[i]) {
+                stack.pop();
+            }
+
+            res[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(a[i]);
+        }
+        return res;
+    }
+    /**1299. Replace Elements with Greatest Element on Right Side**/
+    @Override
+    public int[] replaceElements(int[] arr)
+    {
+        int[] nums=  new int[arr.length];
+        int maxRight = Integer.MIN_VALUE;
+        for(int i=arr.length-1;i>=0;i--)
+        {
+            if(i==arr.length-1) {
+                maxRight = arr[i];
+                nums[i]=-1;
+            }
+            else {
+                nums[i]=maxRight;
+                maxRight=Math.max(maxRight,arr[i]);
+            }
+        }
+        return nums;
+    }
+
+    /**735. Asteroid Collision**/
+    @Override
+    public int[] asteroidCollision(int[] asteroids){
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int asteroid : asteroids) {
+            boolean destroyed = false;
+
+            while (!stack.isEmpty()
+                    && stack.peekLast() > 0
+                    && asteroid < 0) {
+
+                int top = stack.peekLast();
+
+                if (Math.abs(top) < Math.abs(asteroid)) {
+                    stack.pollLast(); // top explodes
+                } else if (Math.abs(top) == Math.abs(asteroid)) {
+                    stack.pollLast(); // both explode
+                    destroyed = true;
+                    break;
+                } else {
+                    destroyed = true; // current explodes
+                    break;
+                }
+            }
+
+            if (!destroyed) {
+                stack.addLast(asteroid);
+            }
+        }
+
+        // Convert to array
+        return stack.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    //TODO down to up is not completed
+    /**741. Cherry Pickup**/
+    @Override
+    public int cherryPickup(int[][] grid){
+        int m = grid.length;
+        int n = grid[0].length;
+
+        for(int c=1;c<n;c++)
+        {
+            if(grid[0][c-1]!=-1)
+                grid[0][c]+=grid[0][c-1];
+        }
+        int i,j=0;
+        //going right/down to right down corner
+        for(i=1;i<m;i++)
+        {
+            //first column take just up column value only
+            grid[i][0]+=grid[i-1][0];
+            grid[i-1][0]=0;
+            for(j=1;j<n;j++)
+            {
+                if(grid[i-1][j]==-1&&grid[i][j-1]==-1)
+                    return 0;
+                if(grid[i][j]!=-1) {
+                    grid[i][j]+=Math.max(grid[i-1][j],grid[i][j-1]);
+                    if(grid[i-1][j]>=grid[i][j-1])
+                        grid[i-1][j]=0;
+                    else grid[i][j-1]=0;
+                }
+            }
+        }
+        //returning left/up to left up corner
+        //last row add all date from right to left
+        for(int c=n-1;c>0;c--)
+        {
+            if(grid[m-1][c-1]!=-1)
+                grid[m-1][c-1]+=grid[m-1][c];
+        }
+
+        for(i=m-2;i>=0;i--)
+        {
+            //c=0 take only bottom column value
+            grid[i][0]+=grid[i+1][0];
+            grid[i+1][0]=0;
+            for(j=n-2;j>=0;j--)
+            {
+                if(grid[i][j]!=-1)
+                {
+                    grid[i][j]+=Math.max(grid[i+1][j],grid[i][j+1]);
+                }
+            }
+        }
+
+        return grid[0][0];
+    }
+
+    /**62. Unique Paths*/
+    @Override
+    public int uniquePaths(int m, int n){
+        int[][] dp = new int[m][n];
+
+        for(int i=0;i<m;i++)
+            dp[i][0] = 1;
+
+        for(int j=0;j<n;j++)
+            dp[0][j] = 1;
+
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+
+    /**63. Unique Paths II**/
+    @Override
+    public int uniquePathsWithObstacles(int[][] obstacleGrid){
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        int[][] dp = new int[m][n];
+
+        for(int i=0;i<m;i++) {
+            if(obstacleGrid[i][0]!=1) {
+                dp[i][0] = 1;
+            }else break;
+        }
+
+        for(int j=0;j<n;j++) {
+            if(obstacleGrid[0][j]!=1) {
+                dp[0][j] = 1;
+            }
+            else break;
+        }
+
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                if(obstacleGrid[i][j]!=1) {
+                    dp[i][j] = (dp[i - 1][j] + dp[i][j - 1]);
+                }
+
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+
+    /**621. Task Scheduler**/
+    @Override
+    public int leastInterval(char[] tasks, int n){
+      return -1;
+    }
+
+    /**find index of left sum==right sum**/
+    @Override
+    public int pivotSumIndex(int[] nums){
+       return -1;
+    }
+
+    static void main() {
+
+        String s ="aabcddaaa";
+        TreeMap<Character,Integer> map = new TreeMap<>((k,v)->)
+    }
 }

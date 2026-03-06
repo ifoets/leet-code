@@ -1124,6 +1124,6 @@ max (5)*/
     static void main() {
 
         String s ="aabcddaaa";
-        TreeMap<Character,Integer> map = new TreeMap<>((k,v)->)
+        //TreeMap<Character,Integer> map = new TreeMap<>((k,v)->);
     }
 }
